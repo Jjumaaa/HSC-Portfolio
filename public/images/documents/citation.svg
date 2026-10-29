@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="Citation Preview placeholder">
+  <rect width="1200" height="900" fill="#0b1f3a"/>
+  <rect x="16" y="16" width="1168" height="868" fill="none" stroke="#b08d3c" stroke-opacity="0.35" stroke-dasharray="10 8"/>
+  <rect x="340" y="190" width="520" height="400" rx="6" fill="none" stroke="#b08d3c" stroke-width="3" opacity="0.55"/><line x1="410" x2="790" y1="280" y2="280" fill="none" stroke="#b08d3c" stroke-width="3" opacity="0.55"/><line x1="410" x2="700" y1="340" y2="340" fill="none" stroke="#b08d3c" stroke-width="3" opacity="0.55"/><line x1="410" x2="790" y1="400" y2="400" fill="none" stroke="#b08d3c" stroke-width="3" opacity="0.55"/><line x1="410" x2="700" y1="460" y2="460" fill="none" stroke="#b08d3c" stroke-width="3" opacity="0.55"/><line x1="410" x2="790" y1="520" y2="520" fill="none" stroke="#b08d3c" stroke-width="3" opacity="0.55"/>
+  <text x="50%" y="750" text-anchor="middle" font-family="Georgia, serif" font-size="55" fill="#f5f1e6">Citation Preview</text>
+  <text x="50%" y="800" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" fill="#b08d3c" letter-spacing="3">PLACEHOLDER · 1200 × 900</text>
+</svg>

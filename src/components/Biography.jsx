@@ -1,89 +1,49 @@
-"use client";
-
-import { motion } from "framer-motion";
+import Reveal from "@/components/Reveal";
+import SectionHeading from "@/components/SectionHeading";
+import { biography } from "@/data/portfolio";
 
 export default function Biography() {
   return (
-    <section
-      id="biography"
-      className="bg-white py-24 px-6 md:px-16"
-    >
-      <div className="max-w-4xl mx-auto">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-green-700 font-semibold tracking-widest uppercase text-sm mb-4 text-center"
-        >
-          Biography
-        </motion.p>
+    <section id="biography" aria-labelledby="biography-heading" className="bg-white px-4 py-24 sm:px-6 md:py-32 lg:px-8">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading id="biography-heading" eyebrow={biography.eyebrow} heading={biography.heading} align="left" />
 
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-3xl md:text-4xl font-bold text-gray-900 mb-12 text-center"
-        >
-          A Life of Service
-        </motion.h2>
+        <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr] lg:gap-20">
+          <Reveal className="space-y-6 text-base leading-relaxed text-slate-700 md:text-lg">
+            {biography.paragraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+            <figure className="mt-10 border-l-2 border-gold pl-6">
+              <blockquote className="font-serif text-xl italic text-navy-900 md:text-2xl">
+                <p>&ldquo;{biography.pullQuote.text}&rdquo;</p>
+              </blockquote>
+              <figcaption className="mt-3 text-sm text-slate-500">{biography.pullQuote.attribution}</figcaption>
+            </figure>
+          </Reveal>
 
-        <div className="grid md:grid-cols-2 gap-12">
-          {/* Career story */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h3 className="text-xl font-semibold text-gray-900 mb-4">
-              Career Story
-            </h3>
-            <p className="text-gray-600 leading-relaxed">
-              [Career narrative goes here — early background, key roles held,
-              turning points, and the path that led to national recognition.
-              This should read as a coherent story, not a list of job titles.]
-            </p>
-          </motion.div>
-
-          {/* Values & philosophy */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <h3 className="text-xl font-semibold text-gray-900 mb-4">
-              Leadership Philosophy
-            </h3>
-            <p className="text-gray-600 leading-relaxed">
-              [Core values and leadership approach — e.g. integrity-first
-              decision making, servant leadership, community-centered impact.
-              This section should reflect personal voice and conviction.]
-            </p>
-          </motion.div>
+          <Reveal delay={0.1} as="aside" aria-label="Key facts">
+            <dl className="divide-y divide-line border-y border-line">
+              {biography.facts.map((fact) => (
+                <div key={fact.label} className="py-5">
+                  <dt className="text-[0.7rem] uppercase tracking-[0.2em] text-slate-500">{fact.label}</dt>
+                  <dd className="mt-1 font-serif text-lg text-navy-950">{fact.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </Reveal>
         </div>
 
-        {/* Values list */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-4 mt-14"
-        >
-          {["Integrity", "Leadership", "Public Service", "Excellence"].map(
-            (value) => (
-              <span
-                key={value}
-                className="bg-gray-100 text-gray-800 px-5 py-2 rounded-full text-sm font-medium border border-gray-200"
-              >
-                {value}
-              </span>
-            )
-          )}
-        </motion.div>
+        <div className="mt-20">
+          <h3 className="mb-8 text-xs font-semibold uppercase tracking-[0.25em] text-gold-dark">Guiding Values</h3>
+          <ul className="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+            {biography.values.map((value, index) => (
+              <Reveal as="li" key={value.title} delay={index * 0.06} className="bg-white p-6">
+                <p className="font-serif text-xl font-semibold text-navy-950">{value.title}</p>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">{value.text}</p>
+              </Reveal>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );

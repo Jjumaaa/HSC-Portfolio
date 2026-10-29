@@ -1,59 +1,47 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { achievements } from "@/data/achievements";
+import Reveal from "@/components/Reveal";
+import SectionHeading from "@/components/SectionHeading";
+import { achievements } from "@/data/portfolio";
 
 export default function Achievements() {
   return (
-    <section
-      id="achievements"
-      className="bg-gray-50 py-24 px-6 md:px-16"
-    >
-      <div className="max-w-6xl mx-auto">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-kenya-green font-semibold tracking-widest uppercase text-sm mb-4 text-center"
-        >
-          Impact
-        </motion.p>
+    <section id="achievements" aria-labelledby="achievements-heading" className="bg-paper px-4 py-24 sm:px-6 md:py-32 lg:px-8">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading
+          id="achievements-heading"
+          eyebrow={achievements.eyebrow}
+          heading={achievements.heading}
+          intro={achievements.intro}
+        />
 
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-3xl md:text-4xl font-bold text-gray-900 mb-16 text-center"
-        >
-          Achievements
-        </motion.h2>
+        <Reveal>
+          <dl className="grid grid-cols-2 gap-px overflow-hidden border border-line bg-line lg:grid-cols-4">
+            {achievements.stats.map((stat) => (
+              <div key={stat.label} className="flex flex-col-reverse bg-white p-6 text-center md:p-8">
+                <dt className="mt-2 text-xs uppercase tracking-[0.18em] text-slate-500">{stat.label}</dt>
+                <dd className="font-serif text-3xl font-semibold text-navy-900 md:text-5xl">{stat.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </Reveal>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {achievements.map((item, index) => (
-            <motion.div
-              key={item.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
+        <ul className="mt-12 grid gap-6 md:grid-cols-2">
+          {achievements.items.map((item, index) => (
+            <Reveal
+              as="li"
+              key={`${item.title}-${index}`}
+              delay={(index % 2) * 0.08}
+              className="group relative border border-line bg-white p-7 transition-shadow hover:shadow-lg md:p-8"
             >
-              <p className="text-4xl font-bold text-kenya-green mb-1">
-                {item.stat}
-              </p>
-              <p className="text-sm text-gray-500 mb-6">{item.statLabel}</p>
-
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                {item.title}
-              </h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                {item.description}
-              </p>
-            </motion.div>
+              <span aria-hidden="true" className="absolute left-0 top-0 h-full w-1 bg-gold/70 transition-colors group-hover:bg-kenya-green" />
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <span className="rounded-full bg-navy-900/5 px-3 py-1 text-xs font-medium text-navy-800">{item.tag}</span>
+                <span className="text-sm text-slate-500">{item.year}</span>
+              </div>
+              <h3 className="mt-5 font-serif text-2xl font-semibold text-navy-950">{item.title}</h3>
+              <p className="mt-3 leading-relaxed text-slate-600">{item.description}</p>
+            </Reveal>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

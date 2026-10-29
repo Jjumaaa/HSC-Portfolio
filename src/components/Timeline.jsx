@@ -1,57 +1,42 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { timelineEvents } from "@/data/timeline";
+import Reveal from "@/components/Reveal";
+import SectionHeading from "@/components/SectionHeading";
+import { timeline } from "@/data/portfolio";
 
 export default function Timeline() {
   return (
-    <section id="timeline" className="bg-white py-24 px-6 md:px-16">
-      <div className="max-w-3xl mx-auto">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-kenya-green font-semibold tracking-widest uppercase text-sm mb-4 text-center"
-        >
-          Journey
-        </motion.p>
+    <section id="timeline" aria-labelledby="timeline-heading" className="bg-white px-4 py-24 sm:px-6 md:py-32 lg:px-8">
+      <div className="mx-auto max-w-5xl">
+        <SectionHeading id="timeline-heading" eyebrow={timeline.eyebrow} heading={timeline.heading} />
 
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-3xl md:text-4xl font-bold text-gray-900 mb-16 text-center"
-        >
-          Career Timeline
-        </motion.h2>
+        <ol className="relative">
+          {/* Vertical line: left on mobile, centred on desktop */}
+          <span aria-hidden="true" className="absolute bottom-0 left-[7px] top-0 w-px bg-line md:left-1/2 md:-translate-x-1/2" />
 
-        <div className="relative border-l-2 border-gray-200 ml-3 md:ml-0">
-          {timelineEvents.map((event, index) => (
-            <motion.div
-              key={event.year}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="relative pl-8 pb-12 last:pb-0"
-            >
-              {/* Dot marker */}
-              <span className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-kenya-green border-4 border-white shadow" />
-
-              <p className="text-sm font-semibold text-kenya-gold mb-1">
-                {event.year}
-              </p>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                {event.title}
-              </h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                {event.description}
-              </p>
-            </motion.div>
-          ))}
-        </div>
+          {timeline.events.map((event, index) => {
+            const right = index % 2 === 1;
+            return (
+              <li key={`${event.title}-${index}`} className="relative pb-12 pl-10 last:pb-0 md:grid md:grid-cols-2 md:gap-16 md:pl-0">
+                <span
+                  aria-hidden="true"
+                  className={`absolute left-0 top-1.5 h-[15px] w-[15px] rounded-full border-2 md:left-1/2 md:-translate-x-1/2 ${
+                    event.highlight ? "border-gold bg-gold" : "border-navy-700 bg-white"
+                  }`}
+                />
+                <Reveal
+                  y={16}
+                  className={`${right ? "md:col-start-2" : "md:text-right"} ${
+                    event.highlight ? "border border-gold/60 bg-paper p-6" : ""
+                  }`}
+                >
+                  <p className="font-serif text-2xl font-semibold text-gold-dark">{event.year}</p>
+                  <h3 className="mt-1 text-lg font-semibold text-navy-950">{event.title}</h3>
+                  <p className="text-sm font-medium uppercase tracking-wider text-slate-500">{event.organisation}</p>
+                  <p className="mt-3 leading-relaxed text-slate-600">{event.description}</p>
+                </Reveal>
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </section>
   );

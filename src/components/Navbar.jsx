@@ -1,43 +1,69 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiMenu, FiX } from "react-icons/fi";
-
-const navLinks = [
-  { label: "Recognition", href: "#hsc-recognition" },
-  { label: "Biography", href: "#biography" },
-  { label: "Achievements", href: "#achievements" },
-  { label: "Timeline", href: "#timeline" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "Documents", href: "#documents" },
-  { label: "Contact", href: "#contact" },
-];
+import { navigation, person } from "@/data/portfolio";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [active, setActive] = useState("");
+
+  // Highlight the link for whichever section is currently on screen.
+  useEffect(() => {
+    const sections = navigation
+      .map((link) => document.querySelector(link.href))
+      .filter(Boolean);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(`#${entry.target.id}`);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e) => e.key === "Escape" && setIsOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isOpen]);
 
   function closeMenu() {
     setIsOpen(false);
   }
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-sm border-b border-gray-200">
-      <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 md:px-16 py-4">
-        <a href="#" className="font-bold text-gray-900 text-lg">
-          [Full Name]
-          <span className="block text-xs font-normal text-gray-500">
-            HSC Recipient
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-line/80 bg-paper/90 backdrop-blur-md">
+      <nav aria-label="Primary" className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+        <a href="#main" className="group leading-tight" onClick={closeMenu}>
+          <span className="block font-serif text-lg font-semibold text-navy-950">
+            {person.fullName}
+            <span className="ml-1.5 align-middle text-xs font-sans font-semibold tracking-widest text-gold-dark">
+              {person.honorific}
+            </span>
+          </span>
+          <span className="block text-[0.7rem] uppercase tracking-[0.2em] text-slate-500">
+            Head of State&apos;s Commendation
           </span>
         </a>
 
         {/* Desktop links */}
-        <ul className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
+        <ul className="hidden items-center gap-1 lg:flex">
+          {navigation.map((link) => (
             <li key={link.href}>
               <a
                 href={link.href}
-                className="text-sm text-gray-700 hover:text-kenya-green transition-colors"
+                aria-current={active === link.href ? "location" : undefined}
+                className={`rounded px-3 py-2 text-sm transition-colors hover:text-navy-950 ${
+                  active === link.href
+                    ? "font-semibold text-navy-950 underline decoration-gold decoration-2 underline-offset-8"
+                    : "text-slate-600"
+                }`}
               >
                 {link.label}
               </a>
@@ -51,9 +77,10 @@ export default function Navbar() {
           onClick={() => setIsOpen((prev) => !prev)}
           aria-label={isOpen ? "Close menu" : "Open menu"}
           aria-expanded={isOpen}
-          className="md:hidden text-gray-900 focus:outline-none focus:ring-2 focus:ring-kenya-green rounded p-1"
+          aria-controls="mobile-menu"
+          className="rounded p-2 text-navy-950 lg:hidden"
         >
-          {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+          {isOpen ? <FiX size={24} aria-hidden="true" /> : <FiMenu size={24} aria-hidden="true" />}
         </button>
       </nav>
 
@@ -61,19 +88,21 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            id="mobile-menu"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25 }}
-            className="md:hidden overflow-hidden border-t border-gray-200 bg-white"
+            className="overflow-hidden border-t border-line bg-paper lg:hidden"
           >
-            <ul className="flex flex-col px-6 py-4 gap-4">
-              {navLinks.map((link) => (
+            <ul className="flex flex-col px-4 py-3 sm:px-6">
+              {navigation.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
                     onClick={closeMenu}
-                    className="block text-gray-700 hover:text-kenya-green transition-colors"
+                    aria-current={active === link.href ? "location" : undefined}
+                    className="block rounded px-2 py-3 text-base text-slate-700 hover:text-navy-950 aria-[current=location]:font-semibold aria-[current=location]:text-navy-950"
                   >
                     {link.label}
                   </a>

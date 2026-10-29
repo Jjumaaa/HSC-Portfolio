@@ -1,96 +1,84 @@
-"use client";
-
-import { motion } from "framer-motion";
-import Image from "next/image";
+import { FiAward } from "react-icons/fi";
+import Reveal from "@/components/Reveal";
+import SectionHeading from "@/components/SectionHeading";
+import PortfolioImage from "@/components/PortfolioImage";
+import { recognition } from "@/data/portfolio";
 
 export default function HSCRecognition() {
+  const details = [
+    { label: "Award year", value: recognition.awardYear },
+    { label: "Category", value: recognition.category },
+    { label: "Conferred by", value: recognition.conferredBy },
+    { label: "Occasion", value: recognition.occasion },
+  ];
+
   return (
     <section
-      id="hsc-recognition"
-      className="bg-kenya-black text-white py-24 px-6 md:px-16"
+      id="recognition"
+      aria-labelledby="recognition-heading"
+      className="relative overflow-hidden bg-navy-950 px-4 py-24 text-white sm:px-6 md:py-32 lg:px-8"
     >
-      <div className="max-w-5xl mx-auto text-center mb-16">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-kenya-gold font-semibold tracking-widest uppercase text-sm mb-4"
-        >
-          National Honor
-        </motion.p>
+      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent" />
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading
+          id="recognition-heading"
+          eyebrow={recognition.eyebrow}
+          heading={recognition.heading}
+          intro={recognition.summary}
+          tone="dark"
+        />
 
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-3xl md:text-5xl font-bold mb-6"
-        >
-          Head of State's Commendation
-        </motion.h2>
+        <div className="grid items-center gap-10 md:grid-cols-[1fr_1.4fr] lg:gap-16">
+          {/* Medal */}
+          <Reveal className="flex flex-col items-center">
+            <figure className="flex flex-col items-center">
+              <div className="relative aspect-square w-56 overflow-hidden rounded-full border-2 border-gold p-2 shadow-[0_0_60px_-15px_rgba(176,141,60,0.6)] md:w-72">
+                <div className="relative h-full w-full overflow-hidden rounded-full">
+                  <PortfolioImage image={recognition.medal} fill sizes="288px" className="object-cover" />
+                </div>
+              </div>
+              <figcaption className="mt-6 flex items-center gap-2 text-sm text-slate-300">
+                <FiAward className="text-gold-light" aria-hidden="true" />
+                Medal of Commendation
+              </figcaption>
+            </figure>
+          </Reveal>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-gray-300 max-w-2xl mx-auto text-lg"
-        >
-          Awarded in recognition of distinguished service, integrity, and
-          contribution to national development.
-        </motion.p>
+          {/* Certificate */}
+          <Reveal delay={0.1}>
+            <figure>
+              <div className="relative aspect-[4/3] overflow-hidden border border-gold/40 bg-navy-900 shadow-2xl">
+                <PortfolioImage
+                  image={recognition.certificate}
+                  fill
+                  sizes="(min-width: 768px) 600px, 100vw"
+                  className="object-cover"
+                />
+              </div>
+              <figcaption className="mt-3 text-sm text-slate-400">Certificate of Commendation</figcaption>
+            </figure>
+          </Reveal>
+        </div>
+
+        <Reveal>
+          <dl className="mt-16 grid grid-cols-1 gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+            {details.map((item) => (
+              <div key={item.label} className="bg-navy-950 p-6">
+                <dt className="text-[0.7rem] uppercase tracking-[0.2em] text-gold-light">{item.label}</dt>
+                <dd className="mt-2 font-serif text-lg text-white">{item.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </Reveal>
+
+        {/* Citation */}
+        <Reveal as="figure" className="mx-auto mt-16 max-w-3xl text-center">
+          <p className="mb-6 text-xs font-semibold uppercase tracking-[0.25em] text-gold-light">Official Citation</p>
+          <blockquote className="font-serif text-xl font-light italic leading-relaxed text-slate-100 md:text-2xl">
+            <p>&ldquo;{recognition.citation}&rdquo;</p>
+          </blockquote>
+        </Reveal>
       </div>
-
-      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-        {/* Medal */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="flex flex-col items-center"
-        >
-          <div className="relative w-[220px] h-[220px] md:w-[280px] md:h-[280px] rounded-full overflow-hidden border-4 border-kenya-gold shadow-2xl">
-            <Image
-              src="https://via.placeholder.com/600x600"
-              alt="Head of State's Commendation medal"
-              fill
-              className="object-cover"
-            />
-          </div>
-          <p className="mt-6 text-gray-400 text-sm">Awarded 2024</p>
-        </motion.div>
-
-        {/* Certificate */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.15 }}
-          className="relative w-full aspect-[4/3] rounded-lg overflow-hidden shadow-2xl border border-gray-700"
-        >
-          <Image
-            src="https://via.placeholder.com/1200x900"
-            alt="Head of State's Commendation certificate"
-            fill
-            className="object-cover"
-          />
-        </motion.div>
-      </div>
-
-      {/* Citation */}
-      <motion.blockquote
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="max-w-3xl mx-auto text-center mt-16 text-xl md:text-2xl font-light italic text-gray-200 border-l-4 border-kenya-gold pl-6 md:border-l-0 md:pl-0"
-      >
-        "For exceptional service to the nation and outstanding contribution
-        to community development, demonstrating the highest standards of
-        integrity and leadership."
-      </motion.blockquote>
     </section>
   );
 }

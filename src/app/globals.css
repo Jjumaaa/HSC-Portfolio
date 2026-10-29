@@ -1,34 +1,74 @@
 @import "tailwindcss";
 
+/* Brand palette — deep navy and ink, with restrained Kenyan accents. */
 @theme {
-  --color-kenya-black: #1a1a1a;
-  --color-kenya-red: #b91c1c;
-  --color-kenya-green: #15803d;
-  --color-kenya-gold: #ca8a04;
-  --color-kenya-navy: #1e3a5f;
+  --color-navy-950: #061224;
+  --color-navy-900: #0b1f3a;
+  --color-navy-800: #13294b;
+  --color-navy-700: #1f3d68;
+  --color-ink: #0b0b0c;
+  --color-paper: #f8f6f1;
+  --color-line: #e4dfd3;
+  --color-gold: #b08d3c;        /* decorative lines, borders, icons */
+  --color-gold-light: #d9bd7a;  /* text on dark backgrounds */
+  --color-gold-dark: #7d5f1f;   /* text on light backgrounds (AA contrast) */
+  --color-kenya-red: #9b1c1c;
+  --color-kenya-green: #1b5e3a;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-serif-display), Georgia, "Times New Roman", serif;
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  /* Keeps anchored sections clear of the fixed header. */
+  scroll-padding-top: 5rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-navy-950);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Consistent, highly visible keyboard focus everywhere. */
+:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Stop the page scrolling behind the open gallery lightbox. */
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Scroll-reveal animations start hidden; never let that hide content when
+   printing (e.g. officials printing the profile). */
+@media print {
+  * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  header {
+    position: static !important;
+  }
 }

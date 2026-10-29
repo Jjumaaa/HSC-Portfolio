@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000" role="img" aria-label="Profile Portrait placeholder">
+  <rect width="800" height="1000" fill="#0b1f3a"/>
+  <rect x="16" y="16" width="768" height="968" fill="none" stroke="#b08d3c" stroke-opacity="0.35" stroke-dasharray="10 8"/>
+  <circle cx="400" cy="380" r="110" fill="none" stroke="#b08d3c" stroke-width="3" opacity="0.55"/><path d="M180 730 q220 -260 440 0" fill="none" stroke="#b08d3c" stroke-width="3" opacity="0.55"/>
+  <text x="50%" y="850" text-anchor="middle" font-family="Georgia, serif" font-size="36" fill="#f5f1e6">Profile Portrait</text>
+  <text x="50%" y="900" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#b08d3c" letter-spacing="3">PLACEHOLDER · 800 × 1000</text>
+</svg>
